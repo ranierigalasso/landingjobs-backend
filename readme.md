@@ -2,6 +2,25 @@
 
 This is a simple API for educational purposes
 
+## Create a database with Mlab
+
+- Create an account in [mlab.com](https://mlab.com)
+- In your dashboard you will see `MongoDB Deployments` click the button `create new`
+- select the cloud provider that you want and select `single-node` and `sandbox` plan and name it
+
+![step1](https://cloud.githubusercontent.com/assets/13393006/26530614/8024372e-43d8-11e7-9390-18b861df5608.png)
+
+Once your database is created we need to create the users.
+
+-	Select the tab users and create an user for that database
+
+![step2](https://cloud.githubusercontent.com/assets/13393006/26530616/840d7d5a-43d8-11e7-80fa-51e5fbd733b1.png)
+
+In order to connect using the driver you need to copy the address similar to this one.
+`mongodb://<dbuser>:<dbpassword>@ds1516621.mlab.com:51661/phoneapi`
+
+Modify `dbuser` and `dbpassword` with the user that you have created.
+
 ## Install and Configuration
 
 Before start you need to rename `.env.sample` to `.env` and modify the env variable called `DATABASE` with your database.
