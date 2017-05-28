@@ -14,7 +14,7 @@ Once your database is created we need to create the users.
 
 -	Select the tab users and create an user for that database
 
-![step2](https://cloud.githubusercontent.com/assets/13393006/26530616/840d7d5a-43d8-11e7-80fa-51e5fbd733b1.png)
+![step2](https://cloud.githubusercontent.com/assets/13393006/26530734/f28c41f6-43da-11e7-976e-8d8becb5dfe5.png)
 
 In order to connect using the driver you need to copy the address similar to this one.
 `mongodb://<dbuser>:<dbpassword>@ds1516621.mlab.com:51661/phoneapi`
