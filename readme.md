@@ -49,3 +49,20 @@ $ npm start
 | `/api/phones/:id` | PUT | JSON | Edits the specified phone |
 | `/api/phones/:id` | DELETE | (empty) | Deletes the specified phone |
 
+## Phone Model
+
+The phone model has the following structure that you will pass into the body
+
+```JSON
+{
+  "brand": "Nokia",
+  "name": "3310",
+  "image": "http://placekitten.com/200/300",
+  "specs": [
+    "barato",
+    "bonito",
+    "vintage"
+  ]
+}
+```
+
