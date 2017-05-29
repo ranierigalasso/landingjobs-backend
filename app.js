@@ -17,6 +17,7 @@ if ( process.env.NODE_ENV === 'development' ) {
 } else {
 	mongoose.connect('mongodb://localhost:27017/phonesapi')
 }
+
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', () => console.log(`Connected to ${process.env.DATABASE} database`) );
