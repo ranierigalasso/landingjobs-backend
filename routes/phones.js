@@ -6,11 +6,12 @@ const Phone = require('../models/phone')
 /* GET users listing. */
 
 router.get('/phones', function(req, res, next) {
+
   Phone.find({}, function(err, phoneList) {
     if( err) {
       res.json(err)
     } else {
-      res.json(phoneList)
+      res.status(200).json(phoneList)
     }
   })
 });

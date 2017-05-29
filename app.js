@@ -6,6 +6,8 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
+const cors = require('cors');
+
 const index = require('./routes/index');
 const phones = require('./routes/phones');
 
@@ -28,6 +30,9 @@ const app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
+let corsOptions = {credentials: true, origin: 'http://localhost:4200'};
+app.options('*', cors(corsOptions));
+app.use(cors(corsOptions));
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
