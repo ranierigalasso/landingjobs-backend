@@ -10,6 +10,7 @@ const cors = require('cors');
 
 const index = require('./routes/index');
 const phones = require('./routes/phones');
+const auth = require('./routes/auth');
 
 require("dotenv").config();
 
@@ -41,7 +42,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', index);
+// app.use('/', index);
+app.use('/', auth);
 app.use('/api', phones);
 
 // catch 404 and forward to error handler
