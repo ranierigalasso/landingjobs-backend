@@ -5,8 +5,8 @@ const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-
-const cors = require('cors');
+const passport   = require('./config/passport');
+const cors = require('cors')({ exposedHeaders: ['X-ResponseTime'] });
 
 const index = require('./routes/index');
 const phones = require('./routes/phones');
@@ -18,7 +18,7 @@ require("dotenv").config();
 if ( process.env.NODE_ENV === 'development' ) {
 	mongoose.connect(process.env.DATABASE);
 } else {
-	mongoose.connect('mongodb://localhost:27017/phonesapi')
+	mongoose.connect(process.env.DATABASE);
 }
 
 const db = mongoose.connection;
@@ -31,9 +31,8 @@ const app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
-let corsOptions = {credentials: true, origin: 'http://localhost:4200'};
-app.options('*', cors(corsOptions));
-app.use(cors(corsOptions));
+app.use(cors);
+app.options('*', cors);
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
@@ -44,7 +43,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // app.use('/', index);
 app.use('/', auth);
-app.use('/api', phones);
+app.use('/api', passport.authenticate('jwt', { session: false }), phones);
+// app.use('/api', phones);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

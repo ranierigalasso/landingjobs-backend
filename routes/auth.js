@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var jwt = require('jsonwebtoken');
 var jwtOptions = require('../config/jwtOptions');
+const passport   = require('../config/passport');
 
 // Our user model
 const User           = require("../models/user");
@@ -44,6 +45,12 @@ router.post("/login", function(req, res) {
   })
 });
 
+router.get("/token", passport.authenticate('jwt', { session: false }), (req, res, next) => {
+	console.log('token user', req.user);
+	console.log('token passport', req.passport);
+	res.json({ok:'ok'})
+})
+
 router.post("/signup", (req, res, next) => {
   var username = req.body.username;
   var password = req.body.password;
@@ -80,6 +87,8 @@ router.post("/signup", (req, res, next) => {
     });
   });
 });
+
+
 
 
 
