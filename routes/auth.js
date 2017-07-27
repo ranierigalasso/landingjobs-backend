@@ -46,8 +46,7 @@ router.post("/login", function(req, res) {
 });
 
 router.get("/token", passport.authenticate('jwt', { session: false }), (req, res, next) => {
-	console.log('token user', req.user);
-	console.log('token passport', req.passport);
+
 	res.json({ok:'ok'})
 })
 
