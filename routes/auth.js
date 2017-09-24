@@ -46,7 +46,6 @@ router.post("/login", function(req, res) {
 });
 
 router.get("/token", passport.authenticate('jwt', { session: false }), (req, res, next) => {
-
 	res.json({ok:'ok'})
 })
 
@@ -78,7 +77,6 @@ router.post("/signup", (req, res, next) => {
         res.status(400).json({ message: err });
       } else {
         var payload = {id: user._id, user: user.username};
-
         var token = jwt.sign(payload, jwtOptions.secretOrKey);
         res.status(200).json({message: "ok", token: token, user: user});
       	// res.status(200).json(user);
