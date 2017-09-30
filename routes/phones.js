@@ -3,6 +3,8 @@ var router = express.Router();
 
 const Phone = require('../models/phone')
 
+const upload = require('../config/multer');
+
 /* GET users listing. */
 
 router.get('/phones', function(req, res, next) {
@@ -16,12 +18,14 @@ router.get('/phones', function(req, res, next) {
   })
 });
 
-router.post('/phones', function(req, res, next) {
+router.post('/phones', upload.single('file'), function(req, res, next) {
+  console.log('body', req.body);
+  
   var newPhone = new Phone( {
     brand: req.body.brand,
-    name: req.body.name,
-    specs: req.body.specs,
-    image: req.body.image || ''
+    model: req.body.model,
+    specs: req.body.specs || [],
+    image: `/uploads/${req.file.filename}` || ''
   } )
 
   newPhone.save( function(err) {
@@ -30,7 +34,7 @@ router.post('/phones', function(req, res, next) {
     } else {
       res.json({
         message: "created",
-        id: newPhone._id
+        phone: newPhone
       })
     }
   })
@@ -53,7 +57,7 @@ router.put('/phones/:id', function(req, res, next) {
   var id = req.params.id;
   var phoneToUpdate = {
       brand: req.body.brand,
-      name: req.body.name,
+      model: req.body.model,
       specs: req.body.specs,
       image: req.body.image || ''
     }

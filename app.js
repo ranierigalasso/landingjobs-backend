@@ -6,7 +6,7 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const passport   = require('./config/passport');
-const cors = require('cors')({ exposedHeaders: ['X-ResponseTime'] });
+const cors = require('cors')();
 
 const index = require('./routes/index');
 const phones = require('./routes/phones');
@@ -30,10 +30,22 @@ const app = express();
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
-
+// var corsOptions = {
+//   origin: 'http://localhost:4200',
+  
+// }
 app.use(cors);
 app.options('*', cors);
 // uncomment after placing your favicon in /public
+// app.use(function (req, res, next) {
+  // res.setHeader('Access-Control-Allow-Origin', 'http://localhost:4200');
+  // res.setHeader('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+  // res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  // res.setHeader('Access-Control-Allow-Credentials', true);
+  // next();
+// });
+
+
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
@@ -43,8 +55,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // app.use('/', index);
 app.use('/', auth);
-// app.use('/api', passport.authenticate('jwt', { session: false }), phones);
-app.use('/api', phones);
+app.use('/api', passport.authenticate('jwt', { session: false }), phones);
+// app.use('/api', phones);
 
 app.use(function(req, res) {
   res.sendfile(__dirname + '/public/index.html');

@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 
 var phoneSchema = new mongoose.Schema({
   brand: { type: String },
-  name: { type: String },
+  model: { type: String },
   image: { type: String },
   specs: { type: Array, default: [] }
 })
