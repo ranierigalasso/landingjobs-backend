@@ -5,9 +5,10 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const cors = require('cors')();
+const session = require('express-session');
 
 const phones = require('./routes/phones');
-
+const auth = require('./routes/auth');
 
 require('dotenv').config();
 
@@ -42,18 +43,26 @@ app.options('*', cors);
 // next();
 // });
 
+app.use(
+  session({
+    secret: 'angular auth passport secret shh',
+    resave: true,
+    saveUninitialized: true,
+    cookie: { httpOnly: true, maxAge: 2419200000 }
+  })
+);
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-
+app.use('/auth', auth);
 app.use('/api', phones);
 
-app.use((req, res) => {
-  res.sendfile(`${__dirname}/public/index.html`);
-});
+// app.use((req, res) => {
+//   res.sendfile(`${__dirname}/public/index.html`);
+// });
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
