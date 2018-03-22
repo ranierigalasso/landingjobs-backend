@@ -1,87 +1,79 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
 
-const Phone = require('../models/phone')
+const router = express.Router();
 
-const upload = require('../config/multer');
+const Phone = require('../models/phone');
 
-/* GET users listing. */
-
-router.get('/phones', function(req, res, next) {
-
-  Phone.find({}, function(err, phoneList) {
-    if( err) {
-      res.json(err)
+router.get('/phones', (req, res, next) => {
+  Phone.find({}, (err, phoneList) => {
+    if (err) {
+      next(err);
     } else {
-      res.status(200).json(phoneList)
+      res.status(200).json(phoneList);
     }
-  })
+  });
 });
 
-router.post('/phones', upload.single('file'), function(req, res, next) {
+router.post('/phones', (req, res, next) => {
   console.log('body', req.body);
-  
-  var newPhone = new Phone( {
+
+  const newPhone = new Phone({
     brand: req.body.brand,
     model: req.body.model,
     specs: req.body.specs || [],
-    image: `/uploads/${req.file.filename}` || ''
-  } )
+    image: req.body.image,
+  });
 
-  newPhone.save( function(err) {
-    if(err) {
-      res.json(err)
+  newPhone.save((err) => {
+    if (err) {
+      next(err);
     } else {
-      res.json({
-        message: "created",
-        phone: newPhone
-      })
+      res.status(200).json({ phone: newPhone });
     }
-  })
-})
+  });
+});
 
-router.get('/phones/:id', function(req, res, next) {
+router.get('/phones/:id', (req, res, next) => {
+  const { id } = req.params;
 
-  var id = req.params.id
-
-  Phone.findById( id, function(err, phone){
-    if(err){
-      res.json(err)
+  Phone.findById(id, (err, phone) => {
+    if (err) {
+      next(err);
     } else {
-      res.json(phone)
+      res.status(200).json(phone);
     }
-  })
-})
+  });
+});
 
-router.put('/phones/:id', function(req, res, next) {
-  var id = req.params.id;
-  var phoneToUpdate = {
-      brand: req.body.brand,
-      model: req.body.model,
-      specs: req.body.specs,
-      image: req.body.image || ''
-    }
+router.put('/phones/:id', (req, res, next) => {
+  const { id } = req.params;
+  const phoneToUpdate = {
+    brand: req.body.brand,
+    model: req.body.model,
+    specs: req.body.specs,
+    image: req.body.image || '',
+  };
 
-  Phone.findByIdAndUpdate(id, phoneToUpdate, function(err){
-    if(err) {
-      res.json(err)
+  Phone.findByIdAndUpdate(id, phoneToUpdate, (err) => {
+    if (err) {
+      next(err);
     } else {
-      res.json({message: "updated"})
+      res.status(200).json({ message: 'updated' });
     }
-  })
-})
+  });
+});
 
-router.delete('/phones/:id', function(req, res, next) {
-  var id = req.params.id
+router.delete('/phones/:id', (req, res, next) => {
+  const { id } = req.params;
 
-  Phone.remove({ _id: id }, function(err){
-    if(err) {
-      res.json(err);
+  Phone.remove({ _id: id }, (err) => {
+    if (err) {
+      next(err);
     } else {
-      res.json({ message: "deleted" });
+      res.status(200).json({ message: 'deleted' });
     }
-  })
-})
+  });
+});
 
 
 module.exports = router;
