@@ -32,32 +32,30 @@ const app = express();
 //   origin: 'http://localhost:4200',
 
 // }
-app.use(cors);
-app.options('*', cors);
+// app.use(cors);
+// app.options('*', cors);
 // uncomment after placing your favicon in /public
-// app.use(function (req, res, next) {
-// res.setHeader('Access-Control-Allow-Origin', 'http://localhost:4200');
-// res.setHeader('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
-// res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-// res.setHeader('Access-Control-Allow-Credentials', true);
-// next();
-// });
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:4200');
+  res.setHeader('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+  res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  res.setHeader('Access-Control-Allow-Credentials', true);
+  next();
+});
 
-app.use(
-  session({
-    secret: 'angular auth passport secret shh',
-    resave: true,
-    saveUninitialized: true,
-    cookie: { httpOnly: true, maxAge: 2419200000 }
-  })
-);
+app.use(session({
+  secret: 'angular auth passport secret shh',
+  resave: true,
+  saveUninitialized: true,
+  cookie: { httpOnly: true, maxAge: 2419200000 },
+}));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/auth', auth);
+// app.use('/auth', auth);
 app.use('/api', phones);
 
 // app.use((req, res) => {
@@ -74,7 +72,7 @@ app.use((req, res, next) => {
 // error handler
 app.use((error, req, res) => {
   // set locals, only providing error in development
-  console.log(error);
+  // console.log(error);
   res.locals.message = error.message;
   res.locals.error = req.app.get('env') === 'development' ? error : {};
 

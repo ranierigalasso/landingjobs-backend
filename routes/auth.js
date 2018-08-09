@@ -6,6 +6,7 @@ const router = express.Router();
 const User = require('../models/user');
 
 router.get('/me', (req, res, next) => {
+  console.log('me', req.session.currentUser);
   if (req.session.currentUser) {
     res.json(req.session.currentUser);
   } else {
@@ -77,6 +78,15 @@ router.post('/signup', (req, res, next) => {
 router.post('/logout', (req, res) => {
   req.session.currentUser = null;
   return res.status(204).send();
+});
+
+router.get('/private', (req, res, next) => {
+  console.log(req.session.currentUser);
+  if (req.session.currentUser) {
+    res.json({ message: "This is a private message" });
+    return;
+  }
+  res.status(403).json({ message: "Unauthorized" });
 });
 
 module.exports = router;
