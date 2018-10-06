@@ -4,11 +4,11 @@ const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-const cors = require('cors')();
+// const cors = require('cors')();
 const session = require('express-session');
 
 const phones = require('./routes/phones');
-const auth = require('./routes/auth');
+// const auth = require('./routes/auth');
 
 require('dotenv').config();
 
@@ -36,7 +36,7 @@ const app = express();
 // app.options('*', cors);
 // uncomment after placing your favicon in /public
 app.use((req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:4200');
+  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3001');
   res.setHeader('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
   res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
   res.setHeader('Access-Control-Allow-Credentials', true);
@@ -55,7 +55,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/auth', auth);
+// app.use('/auth', auth);
 app.use('/api', phones);
 
 // catch 404 and forward to error handler

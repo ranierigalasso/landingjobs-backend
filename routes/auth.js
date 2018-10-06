@@ -6,7 +6,7 @@ const router = express.Router();
 const User = require('../models/user');
 
 router.get('/me', (req, res, next) => {
-  console.log('me', req.session.currentUser);
+  // console.log('me', req.session.currentUser);
   if (req.session.currentUser) {
     res.json(req.session.currentUser);
   } else {
