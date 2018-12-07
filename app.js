@@ -48,11 +48,11 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-
 app.use('/api', phones);
 
 app.use((req, res, next) => {
-  res.status(404).json({ code: 'not found' });
+  res.status(404)
+  res.json({ code: 'not found' });
 });
 
 app.use((err, req, res, next) => {
@@ -61,7 +61,8 @@ app.use((err, req, res, next) => {
 
   // only render if the error ocurred before sending the response
   if (!res.headersSent) {
-    res.status(500).json({ code: 'unexpected' });
+    res.status(500)
+    res.json({ code: 'unexpected' });
   }
 });
 

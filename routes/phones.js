@@ -3,72 +3,77 @@ const router = express.Router();
 const Phone = require('../models/phone');
 
 router.get('/phones', (req, res, next) => {
-  Phone.find({}, (err, phoneList) => {
-    if (err) {
-      next(err);
-    } else {
-      res.status(200).json(phoneList);
-    }
-  });
+  
+  Phone.find({})
+    .then((phoneList) => {
+      res.status(200);
+      res.json(phoneList);
+    })
+    .catch(next)
+
 });
 
 router.post('/phones', (req, res, next) => {
-  const newPhone = new Phone({
-    brand: req.body.brand,
-    model: req.body.model,
-    specs: req.body.specs || [],
-    image: req.body.image,
-  });
+  const { brand, model, specs, image } = req.body;
 
-  newPhone.save((err) => {
-    if (err) {
-      next(err);
-    } else {
-      res.status(200).json({ phone: newPhone });
-    }
+  const newPhone = new Phone({
+    brand,
+    model,
+    specs: specs || [],
+    image,
   });
+  
+  newPhone.save()
+  .then((phone)=> {
+    res.status(200)
+    res.json({phone: newPhone})
+  })
+  .catch(next)
 });
 
 router.get('/phones/:id', (req, res, next) => {
   const { id } = req.params;
 
-  Phone.findById(id, (err, phone) => {
-    if (err) {
-      next(err);
-    } else {
-      res.status(200).json(phone);
-    }
-  });
+  Phone.findById(id)
+    .then((phone) => {
+      res.status(200);
+      res.json(phone);
+    })
+    .catch(next)
 });
 
 router.put('/phones/:id', (req, res, next) => {
   const { id } = req.params;
+  const { brand, model, specs, image } = req.body;
   const phoneToUpdate = {
-    brand: req.body.brand,
-    model: req.body.model,
-    specs: req.body.specs,
-    image: req.body.image || '',
+    brand,
+    model,
+    specs,
+    image,
   };
 
-  Phone.findByIdAndUpdate(id, phoneToUpdate, (err) => {
-    if (err) {
-      next(err);
-    } else {
-      res.status(200).json({ message: 'updated' });
-    }
-  });
+  Phone.findByIdAndUpdate(id, phoneToUpdate)
+    .then((phone) => {
+      res.status(200);
+      res.json({ 
+        message: "updated",
+        phone: phone });
+    })
+    .catch(next)
 });
 
 router.delete('/phones/:id', (req, res, next) => {
   const { id } = req.params;
 
-  Phone.remove({ _id: id }, (err) => {
-    if (err) {
-      next(err);
-    } else {
-      res.status(200).json({ message: 'deleted' });
-    }
-  });
+  Phone.findByIdAndDelete(id)
+    .then((phone) => {
+      res.status(200);
+      res.json({ 
+        message: "deleted",
+        phone: phone });
+    })
+    .catch(next)
+
 });
 
 module.exports = router;
