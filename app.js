@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
+const cors = require('cors');
 
 const phones = require('./routes/phones');
 
@@ -22,6 +23,12 @@ mongoose.connect(process.env.DATABASE)
   });
 
 const app = express();
+
+
+app.use(cors({
+  credentials: true,
+  origin: ['http://localhost:3000']
+}));
 
 app.use(session({
   store: new MongoStore({

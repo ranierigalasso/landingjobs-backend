@@ -1,7 +1,5 @@
 const express = require('express');
-
 const router = express.Router();
-
 const Phone = require('../models/phone');
 
 router.get('/phones', (req, res, next) => {
@@ -72,6 +70,5 @@ router.delete('/phones/:id', (req, res, next) => {
     }
   });
 });
-
 
 module.exports = router;
