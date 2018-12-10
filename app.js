@@ -13,11 +13,15 @@ const phones = require('./routes/phones');
 require('dotenv').config();
 
 
-mongoose.connect(process.env.DATABASE)
+mongoose
+  .connect(
+    process.env.DATABASE,
+    { useNewUrlParser: true }
+  )
   .then(() => {
     console.log(`Connected to ${process.env.DATABASE} database`);
   })
-  .catch((error) => {
+  .catch(error => {
     console.log(error);
     mongoose.connection.close();
   });
