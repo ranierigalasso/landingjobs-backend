@@ -1,0 +1,172 @@
+{
+	"info": {
+		"_postman_id": "a633bf2b-3e03-4440-1d11-b3af0dd39bc6",
+		"name": "PhoneApp",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "/phones",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/phones",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"phones"
+					]
+				},
+				"description": "get all phones"
+			},
+			"response": []
+		},
+		{
+			"name": "/phones",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "718c5bca-a7c6-48fb-af4a-f32bae536fc9",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "212c5ea6-3853-475e-9cb5-f2f906e35e27",
+						"exec": [
+							"var resBody = JSON.parse(responseBody)",
+							"",
+							"pm.globals.set(\"phone_id\", resBody.phone._id);",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"brand\": \"test\",\n  \"model\": \"testing\",\n  \"image\": \"https://cdn.macrumors.com/article-new/2017/09/iphonexdesign.jpg\",\n  \"specs\": [\"tag\", \"anothertag\"]\n}"
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/phones/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"phones",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/phones/:id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/phones/{{phone_id}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"phones",
+						"{{phone_id}}"
+					]
+				},
+				"description": "get one phone we need to pass an ID"
+			},
+			"response": []
+		},
+		{
+			"name": "/phones/:id",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"brand\": \"apple\",\n  \"model\": \"iPhone 8 Plus\",\n  \"image\": \"https://cdn.macrumors.com/article-new/2017/09/iphonexdesign.jpg\",\n  \"specs\": [\"tag\", \"anothertag\"]\n}"
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/phones/{{phone_id}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"phones",
+						"{{phone_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/phones/:id",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:3000/api/phones/{{phone_id}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"phones",
+						"{{phone_id}}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
