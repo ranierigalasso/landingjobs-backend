@@ -8,7 +8,8 @@ const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
 const cors = require('cors');
 
-const phones = require('./routes/phones');
+const politicians = require('./routes/politicians');
+const events = require('./routes/events');
 
 require('dotenv').config();
 
@@ -52,7 +53,9 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/api', phones);
+app.use('/', politicians);
+app.use('/events', events);
+
 
 app.use((req, res, next) => {
   res.status(404)
