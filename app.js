@@ -16,11 +16,11 @@ require('dotenv').config();
 
 mongoose
   .connect(
-    process.env.DATABASE,
+    process.env.MONGODB_URI,
     { useNewUrlParser: true }
   )
   .then(() => {
-    console.log(`Connected to ${process.env.DATABASE} database`);
+    console.log(`Connected to ${process.env.MONGODB_URI} database`);
   })
   .catch(error => {
     console.log(error);
