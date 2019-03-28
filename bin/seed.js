@@ -2,7 +2,6 @@ const mongoose = require('mongoose');
 const { ObjectId } = mongoose.Types;
 
 const Politician = require('../models/politician');
-// const Event = require('../models/event');
 
 const politicians = [
   {name: 'George Soros', joinDate:'1971-12-08'},
