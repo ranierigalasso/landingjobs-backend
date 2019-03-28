@@ -9,7 +9,7 @@ const politicians = [
   {name: 'Eleonor Jessin', joinDate:'1980-12-08'},
 ];
 
-mongoose.connect(proccess.env.DATABASE, { useNewUrlParser: true })
+mongoose.connect(process.env.DATABASE, { useNewUrlParser: true })
   .then(() => {
     console.log('connected to db');
     return Politician.create(politicians);
