@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const { ObjectId } = mongoose.Types;
+require('dotenv').config();
 
 const Politician = require('../models/politician');
 
