@@ -51,17 +51,14 @@ router.post('/create', (req, res, next) => {
           let superiorID = data.superiorId;
           Politician.find({subordinates: {$in: [superior._id]}})
             .then((response) => {
-              console.log(response)
               response.forEach((politician) => {
                 updateSuperior(politician._id,newPolitician)
                   .then(() => {
-                    console.log('updated all other')
                   })
                   .catch(next)
               })
               updateSuperior(superiorID,newPolitician)
                 .then((data) => {
-                  console.log('superior update')
                   res.status(200);
                   res.json(data);
                 })
